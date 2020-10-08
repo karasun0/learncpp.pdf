@@ -1,6 +1,6 @@
-from pdfkit import from_url  # from_url()
 from bs4 import BeautifulSoup  # BeautifulSoup
 from requests import get  # get()
+from os import system  # system()
 
 
 def get_site_index_urls() -> list:
@@ -44,7 +44,9 @@ def urls_to_pdf(urls: list) -> None:
         Parameters: urls: list
         Return type: None
     """
-    from_url(urls, "learncpp.pdf") # Turning all url to PDF format
+    urls_str = ' '.join([str(e) for e in urls])  # Turning urls list to string
+    # Turn urls to PDF using wkhtmltopdf
+    system(f"wkhtmltopdf -n {urls_str} learncpp.pdf")
 
 
 if __name__ == "__main__":
@@ -54,6 +56,6 @@ if __name__ == "__main__":
     site_index_print_urls = site_index_print_urls(
         site_index_urls)  # For content's print urls
 
-    urls_to_pdf(site_index_print_urls) # Turning all url to PDF format
+    urls_to_pdf(site_index_print_urls)  # Turning all url to PDF format
 
     print("Finished.")
